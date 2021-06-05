@@ -2,6 +2,8 @@ let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
 let box = 32;
 let snake=[];
+let direction = "right";
+
 snake[0]={
     x: 8*box,
     y: 8*box
@@ -19,5 +21,29 @@ function criarCobrinha(){
     }
 }
 
-criarBG();
-criarCobrinha();
+function iniciarJogo(){
+    criarBG();
+    criarCobrinha();
+
+    let snakex = snake[0].x;
+    let snakey = snake[0].y;
+
+    //Condições para adicionar novos quadrados
+    if(direction=="right") snakex += box;
+    if(direction=="left") snakex -= box;
+    if(direction=="up") snakey -= box;
+    if(direction=="down") snakey += box;
+
+    //removendo quadrados antigos
+    snake.pop();
+
+    //Adicionando novo quadrado
+    let newHead = {
+        x: snakex,
+        y: snakey
+    }
+
+    snake.unshift(newHead);
+}
+
+let jogo = setInterval(iniciarJogo,100);
